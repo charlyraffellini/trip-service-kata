@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TripServiceKata.Exception;
-using TripServiceKata.User;
 
 namespace TripServiceKata.Trip
 {
@@ -26,7 +25,7 @@ namespace TripServiceKata.Trip
 
         private List<Trip> NoTrips() => new List<Trip>();
 
-        public virtual List<Trip> TripsByUser(User.User user)
+        private List<Trip> TripsByUser(User.User user)
         {
             return _tripDao.TripsByUser(user);
         }
