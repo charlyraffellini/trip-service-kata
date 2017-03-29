@@ -5,7 +5,7 @@ namespace TripServiceKata.Trip
 {
     public class TripDAO
     {
-        public virtual List<Trip> TripsByUser(User.User user) => TripDAO.FindTripsByUser(user);
+        public virtual List<Trip> TripsByUser(User.User user) => FindTripsByUser(user);
 
         public static List<Trip> FindTripsByUser(User.User user)
         {

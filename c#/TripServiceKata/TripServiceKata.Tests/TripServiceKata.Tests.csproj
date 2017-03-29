@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TripDAOShould.cs" />
     <Compile Include="TripServiceShould.cs" />
     <Compile Include="UserShould.cs" />
   </ItemGroup>

@@ -64,7 +64,7 @@ namespace TripServiceKata.Tests
 
             protected override User.User LoggedUser() => _loggedUser;
 
-            protected override List<Trip.Trip> FindTripsByUser(User.User user)
+            public override List<Trip.Trip> TripsByUser(User.User user)
             {
                 return user.Trips();
             }
