@@ -57,7 +57,7 @@ namespace TripServiceKata.Tests
         {
             private readonly User.User _loggedUser;
 
-            public TripServiceTest(User.User loggedUser)
+            public TripServiceTest(User.User loggedUser) : base(new TripDAO())
             {
                 _loggedUser = loggedUser;
             }

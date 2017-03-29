@@ -6,7 +6,12 @@ namespace TripServiceKata.Trip
 {
     public class TripService
     {
-        private readonly TripDAO _tripDao = new TripDAO();
+        private readonly TripDAO _tripDao;
+
+        public TripService(TripDAO tripDao)
+        {
+            _tripDao = tripDao;
+        }
 
         public List<Trip> GetTripsByUser(User.User user)
         {
