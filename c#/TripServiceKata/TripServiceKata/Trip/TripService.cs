@@ -26,8 +26,6 @@ namespace TripServiceKata.Trip
 
         private List<Trip> NoTrips() => new List<Trip>();
 
-        public virtual User.User LoggedUser() => UserSession.GetInstance().GetLoggedUser();
-
         public virtual List<Trip> TripsByUser(User.User user)
         {
             return _tripDao.TripsByUser(user);
