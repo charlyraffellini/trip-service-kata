@@ -14,8 +14,10 @@ namespace TripServiceKata.Trip
             }
             return user.IsFriend(LoggedUser())
                 ? FindTripsByUser(user)
-                : new List<Trip>();
+                : NoTrips();
         }
+
+        private List<Trip> NoTrips() => new List<Trip>();
 
         protected virtual User.User LoggedUser() => UserSession.GetInstance().GetLoggedUser();
 
