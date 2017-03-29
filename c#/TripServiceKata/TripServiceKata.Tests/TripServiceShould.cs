@@ -8,19 +8,31 @@ namespace TripServiceKata.Tests
 {
     public class TripServiceShould
     {
+        private const User.User Guest = null;
+        private const User.User NoUser = null;
+        private User.User _loggedUser;
+
         [Fact]
         public void Thow_an_exception_when_user_is_not_logged_in()
         {
-            var tripService = new TripServiceTest();
-             
-            Action call = () => tripService.GetTripsByUser(null);
+            var tripService = new TripServiceTest(_loggedUser);
+            _loggedUser = Guest;
+
+            Action call = () => tripService.GetTripsByUser(NoUser);
 
             call.ShouldThrow<UserNotLoggedInException>();
         }
 
-        internal class TripServiceTest : TripService
+        class TripServiceTest : TripService
         {
-            protected override User.User GetLoggedUser() => null;
+            private readonly User.User _loggedUser;
+
+            public TripServiceTest(User.User loggedUser)
+            {
+                _loggedUser = loggedUser;
+            }
+
+            protected override User.User LoggedUser() => _loggedUser;
         }
     }
 }
