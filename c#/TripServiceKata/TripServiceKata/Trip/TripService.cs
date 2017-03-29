@@ -10,19 +10,16 @@ namespace TripServiceKata.Trip
         {
             List<Trip> tripList = new List<Trip>();
             User.User loggedUser = LoggedUser();
-            if (loggedUser != null)
-            {
-                var isFriend = user.IsFriend(loggedUser);
-                if (isFriend)
-                {
-                    tripList = FindTripsByUser(user);
-                }
-                return tripList;
-            }
-            else
+            if (loggedUser == null)
             {
                 throw new UserNotLoggedInException();
             }
+            var isFriend = user.IsFriend(loggedUser);
+            if (isFriend)
+            {
+                tripList = FindTripsByUser(user);
+            }
+            return tripList;
         }
 
         protected virtual User.User LoggedUser() => UserSession.GetInstance().GetLoggedUser();
