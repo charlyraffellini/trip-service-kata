@@ -25,10 +25,10 @@ namespace TripServiceKata.Tests
         [Fact]
         public void Return_trips_when_users_are_friends()
         {
-            var tripService = new TripServiceTest(RegisteredUser);
+            var tripService = new TripServiceTest();
             Friend.AddFriend(RegisteredUser);
 
-            var trips = tripService.GetTripsByUser(Friend, tripService.LoggedUser());
+            var trips = tripService.GetTripsByUser(Friend, RegisteredUser);
 
             trips.Should().HaveCount(2);
         }
@@ -36,9 +36,9 @@ namespace TripServiceKata.Tests
         [Fact]
         public void Not_return_any_trip_when_users_are_not_friends()
         {
-            var tripService = new TripServiceTest(RegisteredUser);
+            var tripService = new TripServiceTest();
 
-            var  trips = tripService.GetTripsByUser(Friend, tripService.LoggedUser());
+            var  trips = tripService.GetTripsByUser(Friend, RegisteredUser);
 
             trips.Should().BeEmpty();
         }
@@ -46,23 +46,18 @@ namespace TripServiceKata.Tests
         [Fact]
         public void Thow_an_exception_when_user_is_not_logged_in()
         {
-            var tripService = new TripServiceTest(Guest);
+            var tripService = new TripServiceTest();
 
-            Action call = () => tripService.GetTripsByUser(NoUser, ((TripService) tripService).LoggedUser());
+            Action call = () => tripService.GetTripsByUser(NoUser, Guest);
 
             call.ShouldThrow<UserNotLoggedInException>();
         }
 
         class TripServiceTest : TripService
         {
-            private readonly User.User _loggedUser;
-
-            public TripServiceTest(User.User loggedUser) : base(new TripDAO())
+            public TripServiceTest() : base(new TripDAO())
             {
-                _loggedUser = loggedUser;
             }
-
-            public override User.User LoggedUser() => _loggedUser;
 
             public override List<Trip.Trip> TripsByUser(User.User user)
             {
