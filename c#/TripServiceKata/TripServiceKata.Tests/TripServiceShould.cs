@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using TripServiceKata.Exception;
 using TripServiceKata.Trip;
@@ -10,16 +11,32 @@ namespace TripServiceKata.Tests
     {
         private const User.User Guest = null;
         private const User.User NoUser = null;
-        private User.User _loggedInUser;
         private static readonly User.User RegisteredUser = new User.User();
         private User.User Friend = new User.User();
         private Trip.Trip ToBarcelona = new Trip.Trip();
+        private Trip.Trip ToLondon = new Trip.Trip();
+
+        public TripServiceShould()
+        {
+            Friend.AddTrip(ToBarcelona);
+            Friend.AddTrip(ToLondon);
+        }
+
+        [Fact]
+        public void Return_trips_when_users_are_friends()
+        {
+            var tripService = new TripServiceTest(RegisteredUser);
+            Friend.AddFriend(RegisteredUser);
+
+            var trips = tripService.GetTripsByUser(Friend);
+
+            trips.Should().HaveCount(2);
+        }
 
         [Fact]
         public void Not_return_any_trip_when_users_are_not_friends()
         {
             var tripService = new TripServiceTest(RegisteredUser);
-            Friend.AddTrip(ToBarcelona);
 
             var  trips = tripService.GetTripsByUser(Friend);
 
@@ -46,6 +63,11 @@ namespace TripServiceKata.Tests
             }
 
             protected override User.User LoggedUser() => _loggedUser;
+
+            protected override List<Trip.Trip> FindTripsByUser(User.User user)
+            {
+                return user.Trips();
+            }
         }
     }
 }
